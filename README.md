@@ -1,8 +1,8 @@
+
 # PermissionGuard — Permission Lifecycle & Permission Creep Detection System
 
 > **A realistic, functional cybersecurity engineering prototype built for access governance, permission lifecycle control, and explainable permission creep detection.**
 
----
 
 ## 1. Problem Statement & Innovation Direction
 
@@ -16,7 +16,6 @@ PermissionGuard provides an end-to-end access governance engine that:
 4. **Immutable Audit Trails**: Captures file operations, permission transitions, version updates, and administrative decisions in a relational audit log.
 5. **Formal Executive Audit Reports**: Generates downloadable PDF reports with executive summaries, metrics tables, and remediation guidance.
 
----
 
 ## 2. Core Architecture & Technology Stack
 
@@ -63,7 +62,6 @@ permissionguard/
 - **Frontend**: Clean vanilla JavaScript (ES6+), CSS3, HTML5, Chart.js (interactive telemetry visualizations)
 - **Testing**: Pytest & FastAPI TestClient
 
----
 
 ## 3. Database Schema (14 Relational Tables)
 
@@ -82,7 +80,6 @@ permissionguard/
 13. `notifications`: In-app security alerts and workflow notifications.
 14. `system_settings`: Configurable policy thresholds (inactivity window, grant durations, risk boundaries).
 
----
 
 ## 4. Detection Engine & Risk Scoring Model
 
@@ -107,7 +104,6 @@ The `permission_detector` module evaluates active grants against 8 transparent r
 
 *Every finding displays the exact arithmetic breakdown of points added.*
 
----
 
 ## 5. Five Pre-Configured Demonstration Scenarios
 
@@ -119,7 +115,6 @@ The `permission_detector` module evaluates active grants against 8 transparent r
 | **4. Repeated Extension** | Arun Kumar (Developer) | `Database_Disaster_Recovery.pdf`| EDIT | Extended 3 times → **MEDIUM/HIGH RISK (Repeated Extension Rule)**. |
 | **5. High-Impact Sensitive** | Rohan Joshi (Intern) | `Executive_Payroll_2026.xlsx` | EDIT | Non-permanent intern holds edit access on RESTRICTED HR payroll → **CRITICAL RISK**. |
 
----
 
 ## 6. Demo Accounts & Credentials
 
@@ -134,7 +129,6 @@ The `permission_detector` module evaluates active grants against 8 transparent r
 | **`hr`** | HR | Human Resources | Employee records, onboarding, and payroll governance |
 | **`intern`** | Intern | Engineering | Strictly restricted access, role mismatch testing, and request submissions |
 
----
 
 ## 7. Step-by-Step Presentation Demonstration Flow
 
@@ -170,7 +164,6 @@ The `permission_detector` module evaluates active grants against 8 transparent r
 11. **Demo Data Reset**:
     - Under **Settings**, click **Reset All Demo Data** to restore the initial test state.
 
----
 
 ## 8. Installation & Running Locally
 
@@ -199,15 +192,12 @@ Open your browser and navigate to: **`http://127.0.0.1:8000`**
 python -m pytest tests/test_permissionguard.py -v
 ```
 
----
-
 ## 9. Important Prototype Limitations
 
 - **Synthetic Telemetry**: Resource files and user access telemetry are synthetic simulations for safe demonstration and do not touch real enterprise file systems.
 - **Standalone IAM**: This is a security engineering prototype and does not automatically configure live cloud IAM providers (such as AWS IAM, Okta, or Azure AD) without external connector plugins.
 - **Single-Node SQLite**: Built with SQLite for zero-setup local demonstration; the data access layer is structured for straightforward migration to PostgreSQL in production.
 
----
 
 ## 10. Future Engineering Scope
 
@@ -216,3 +206,6 @@ python -m pytest tests/test_permissionguard.py -v
 3. **Continuous Access Evaluation (CAE)**: Real-time session revocation upon immediate role changes.
 4. **Cloud Storage Adapters**: Direct read/write auditing on AWS S3 buckets, Google Cloud Storage, and SharePoint.
 5. **Policy-as-Code Integration**: Open Policy Agent (OPA) / Rego policy evaluation for automated compliance enforcement.
+=======
+# PermissionGuard
+>>>>>>> 6b243c9eb94f197b890787c12eeddc3e08cb1259
