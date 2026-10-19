@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PermissionGuard — Access Governance & Creep Detection</title>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- Authenticated Shell (rendered when token exists) -->
+    <aside class="sidebar" id="sidebar" style="display: none;">
+      <div class="sidebar-header">
+        <span class="logo-badge">PG</span>
+        <div>
+          <div class="brand-title">PermissionGuard</div>
+          <div class="brand-subtitle">v1.0.0-PROTOTYPE</div>
+        </div>
+      </div>
+
+      <ul class="nav-links">
+        <li class="nav-item active" data-view="dashboard">
+          <a href="#/dashboard"><span class="icon">📊</span> Dashboard</a>
+        </li>
+        <li class="nav-item" data-view="requests">
+          <a href="#/requests"><span class="icon">📥</span> Access Requests <span class="nav-badge blue" id="nav-pending-badge" style="display:none">0</span></a>
+        </li>
+        <li class="nav-item" data-view="permissions">
+          <a href="#/permissions"><span class="icon">🔑</span> Permissions</a>
+        </li>
+        <li class="nav-item" data-view="reviews" id="nav-reviews-item">
+          <a href="#/reviews"><span class="icon">🔍</span> Access Reviews <span class="nav-badge" id="nav-reviews-badge" style="display:none">0</span></a>
+        </li>
+        <li class="nav-item" data-view="findings">
+          <a href="#/findings"><span class="icon">⚠️</span> Security Findings <span class="nav-badge" id="nav-findings-badge" style="display:none">0</span></a>
+        </li>
+        <li class="nav-item" data-view="users">
+          <a href="#/users"><span class="icon">👥</span> Users</a>
+        </li>
+        <li class="nav-item" data-view="resources">
+          <a href="#/resources"><span class="icon">📁</span> Resources & Files</a>
+        </li>
+        <li class="nav-item" data-view="audit" id="nav-audit-item">
+          <a href="#/audit"><span class="icon">📜</span> Audit Logs</a>
+        </li>
+        <li class="nav-item" data-view="reports" id="nav-reports-item">
+          <a href="#/reports"><span class="icon">📄</span> Audit Reports</a>
+        </li>
+        <li class="nav-item" data-view="settings" id="nav-settings-item">
+          <a href="#/settings"><span class="icon">⚙️</span> Settings</a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-badge">
+          <div class="user-avatar" id="sidebar-user-avatar">AD</div>
+          <div class="user-details">
+            <div class="user-name" id="sidebar-user-name">Administrator</div>
+            <div class="user-role" id="sidebar-user-role">System Administrator</div>
+          </div>
+        </div>
+        <button class="btn-logout" id="btn-logout-trigger">Sign Out</button>
+      </div>
+    </aside>
+
+    <div class="main-wrapper" id="main-wrapper" style="display: none;">
+      <header class="topbar">
+        <div class="topbar-left">
+          <span class="page-title" id="page-heading">Security Dashboard</span>
+          <span class="page-description" id="page-subheading">Point-in-time access posture & creep detection</span>
+        </div>
+        <div class="topbar-right">
+          <div class="system-status-indicator">
+            <span class="status-dot"></span>
+            <span>SYSTEM ACTIVE (LEAST-PRIVILEGE MODE)</span>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btn-quick-request">+ Request Access</button>
+          <button class="btn btn-secondary btn-sm" id="btn-quick-simulate">Simulate File Op</button>
+          <button class="btn btn-primary btn-sm" id="btn-quick-run-detector">Run Creep Detector</button>
+        </div>
+      </header>
+
+      <main class="content-area" id="main-content">
+        <!-- Views dynamically injected here -->
+      </main>
+    </div>
+
+    <!-- Login Modal/Screen -->
+    <div class="login-screen" id="login-modal" style="display: flex;">
+      <div class="login-card">
+        <div class="login-header">
+          <div class="login-brand">
+            <span class="logo-badge">PG</span>
+            <span class="login-brand-title">PermissionGuard</span>
+          </div>
+          <p class="login-subtitle">Permission Lifecycle & Permission Creep Detection System</p>
+        </div>
+        <div class="login-body">
+          <form id="login-form">
+            <div class="form-group">
+              <label class="form-label">Username or Email</label>
+              <input type="text" id="login-username" class="form-control" placeholder="admin or admin@example.local" required value="admin">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Password</label>
+              <input type="password" id="login-password" class="form-control" placeholder="••••••••" required value="DemoPassword123!">
+            </div>
+            <div id="login-error" style="color: #dc2626; font-size: 12px; margin-bottom: 12px; display: none;"></div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Sign In to Console</button>
+          </form>
+
+          <div class="demo-credentials-box">
+            <div style="font-weight: 600; margin-bottom: 4px;">Click an account to autofill (Demo Password: DemoPassword123!)</div>
+            <div>
+              <span class="demo-account-pill" onclick="fillLogin('admin')">admin (Admin)</span>
+              <span class="demo-account-pill" onclick="fillLogin('manager')">manager (Manager)</span>
+              <span class="demo-account-pill" onclick="fillLogin('developer')">developer (Dev Arun)</span>
+              <span class="demo-account-pill" onclick="fillLogin('finance')">finance (Fin Ananya)</span>
+              <span class="demo-account-pill" onclick="fillLogin('hr')">hr (HR Deepak)</span>
+              <span class="demo-account-pill" onclick="fillLogin('intern')">intern (Intern Rohan)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Generic Modal Container for Dialogs -->
+    <div id="modal-container"></div>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
